@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "618da0e3-d65b-4397-ae1d-af141e466559",
+		"name": "API Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42427101",
+		"_collection_link": "https://www.postman.com/science-geologist-56955562/workspace/my-workspace/collection/42427101-618da0e3-d65b-4397-ae1d-af141e466559?action=share&source=collection_link&creator=42427101"
+	},
+	"item": [
+		{
+			"name": "Get Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Testing the status code\r",
+							"pm.test(\"Status Code Test\",()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"//If you want to test for the status code being one of set\r",
+							"pm.test(\"Status code check\",()=>{\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"//Testing the response time\r",
+							"pm.test(\"Response Time should be less than 100\",()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200); //checking the response time will be under 100\r",
+							"});\r",
+							"//Headers Testing\r",
+							"// Checking a response header is present\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"//Header Value Checking\r",
+							"pm.test(\"Checking response Header value is application/json\", () => {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\");\r",
+							"});\r",
+							"\r",
+							"//Testing Cookies\r",
+							"//Checking a cookie is present in the response\r",
+							"pm.test(\"Cookies is present\",()=>{\r",
+							"    pm.expect(pm.cookies.has(\"mycookie\")).to.be.true;\r",
+							"});\r",
+							"\r",
+							"//Testing the Response Body\r",
+							"const json = pm.response.json(); //parse the response body to JSON\r",
+							"pm.test(\"Test Data Type of response\", () => {\r",
+							"    pm.expect(json).to.be.an('object');\r",
+							"    pm.expect(json.data).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"//Asserting Array Property\r",
+							"pm.test(\"Test array Property\",()=>{\r",
+							"    pm.expect(json.data).to.have.lengthOf(6);\r",
+							"\r",
+							"})\r",
+							"\r",
+							"\r",
+							"//Asserting Schema\r",
+							"\r",
+							"pm.test(\"Schema Validation\", () => {\r",
+							"    const schema = {\r",
+							"        \"type\": \"object\",\r",
+							"        \"properties\": {\r",
+							"            \"page\": {\"type\": \"number\"},\r",
+							"            \"per_page\": {\"type\": \"number\"},\r",
+							"            \"total\": {\"type\": \"number\"},\r",
+							"            \"total_pages\": {\"type\": \"number\"},\r",
+							"            \"data\": {\r",
+							"                \"type\": \"array\",\r",
+							"                \"items\": {\r",
+							"                    \"type\": \"object\",\r",
+							"                    \"properties\": {\r",
+							"                        \"id\": {\"type\": \"number\"},\r",
+							"                        \"email\": {\"type\": \"string\"},\r",
+							"                        \"first_name\": {\"type\": \"string\"},\r",
+							"                        \"last_name\": {\"type\": \"string\"},\r",
+							"                        \"avatar\": {\"type\": \"string\"}\r",
+							"                    },\r",
+							"                    \"required\": [\"id\", \"email\", \"first_name\", \"last_name\", \"avatar\"]\r",
+							"                }\r",
+							"            },\r",
+							"            \"support\": {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\": {\r",
+							"                    \"url\": {\"type\": \"string\"},\r",
+							"                    \"text\": {\"type\": \"string\"}\r",
+							"                },\r",
+							"                \"required\": [\"url\", \"text\"]\r",
+							"            }\r",
+							"        },\r",
+							"        \"required\": [\"page\", \"per_page\", \"total\", \"total_pages\", \"data\", \"support\"]\r",
+							"    };\r",
+							"    pm.expect(json).to.have.jsonSchema(schema);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Testing the status code\r",
+							"pm.test(\"Status Code Test\",()=> {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"//If you want to test for the status code being one of set\r",
+							"pm.test(\"Status code check\",()=>{\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"//Testing the response time\r",
+							"pm.test(\"Response Time should be less than 100\",()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500); //checking the response time will be under 100\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"leader\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Testing the status code\r",
+							"pm.test(\"Status Code Test\",()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"//If you want to test for the status code being one of set\r",
+							"pm.test(\"Status code check\",()=>{\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"//Testing the response time\r",
+							"pm.test(\"Response Time should be less than 100\",()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300); //checking the response time will be under 100\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Vishnu\",\r\n    \"job\": \"leader\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/736",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"736"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Testing the status code\r",
+							"pm.test(\"Status Code Test\",()=> {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"//If you want to test for the status code being one of set\r",
+							"pm.test(\"Status code check\",()=>{\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+							"});\r",
+							"//Testing the response time\r",
+							"pm.test(\"Response Time should be less than 100\",()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300); //checking the response time will be under 100\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/736",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"736"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Testing the status code\r",
+							"pm.test(\"Status Code Test\",()=> {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"//If you want to test for the status code being one of set\r",
+							"pm.test(\"Status code check\",()=>{\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"});\r",
+							"//Testing the response time\r",
+							"pm.test(\"Response Time should be less than 100\",()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300); //checking the response time will be under 100\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"Camera Man\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/736",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"736"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
