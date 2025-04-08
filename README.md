@@ -43,5 +43,4 @@ Each request includes **assertions to validate**:
 
 ---
 
-## 📁 Folder Structure
 
